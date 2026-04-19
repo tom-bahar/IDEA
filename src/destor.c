@@ -356,6 +356,12 @@ void destor_stat() {
 	exit(0);
 }
 
+/* -- semantic-index integration: begin contiguous injection --
+ * When DESTOR_AS_LIBRARY is defined, strip main() so destor.c can
+ * be compiled into a static library consumed by chunk_exporter.
+ * All other symbols in this file remain available. See
+ * src/CMakeLists.txt for the define. */
+#ifndef DESTOR_AS_LIBRARY
 int main(int argc, char **argv) {
 
 	destor_start();
@@ -544,6 +550,8 @@ int main(int argc, char **argv) {
 
 	return 0;
 }
+#endif /* !DESTOR_AS_LIBRARY */
+/* -- semantic-index integration: end contiguous injection -- */
 
 struct chunk* new_chunk(int32_t size) {
 	struct chunk* ck = (struct chunk*) malloc(sizeof(struct chunk));
