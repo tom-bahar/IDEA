@@ -12,9 +12,14 @@
 #include "index/index.h"
 #include "storage/containerstore.h"
 #include "utils/file_utils.h"
+// -- semantic-index integration: skip Lucene-dependent symbols when
+// -- building destor as a library (only main() uses them).
+#ifndef DESTOR_AS_LIBRARY
 #include "libclucene-wrapper.h"
 
 extern void load_only(std::string path);
+#endif
+// -- end semantic-index integration --
 
 extern void do_backup(char *path, int index_mode);
 //extern void do_delete(int revision);
